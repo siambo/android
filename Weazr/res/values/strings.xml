@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Weazr</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="dateValue">Mar 01, 2014</string>
+    <string name="cityValue">New York, US</string>
+    <string name="flagValue">us</string>
+    
+    <!-- image/content descriptions -->
+    <string name="weatherImageContentDescriptionValue">Weather</string>
+    
+    <!-- interface labels -->
+    <string name="min">Minimum :</string>
+    <string name="max">Maximum :</string>
+    <string name="humidity">Humidity :</string>
+    <string name="pressure">Pressure :</string>
+    <string name="wind">Wind :</string>
+    <string name="degree">Degree :</string>
+    
+    
+    
+    <!-- temp/value -->
+    <string name="nowTempValue"></string>
+    <string name="minTempValue"></string>
+    <string name="maxTempValue"></string>
+    <string name="humidityValue"></string>
+    <string name="pressureValue"></string>
+    <string name="speedValue"></string>
+    <string name="degreeValue"></string>
+    
+    <!-- colors -->
+    
+    <!-- Google Play Service version -->
+    <integer name="google_play_services_version">4242000</integer>
+    
+    <string name="info">Weazr is a simple weather app that shows the current weather 
+        and a 10 day forcast using web service APIs provided by Open Weather Map.
+        The weazr app android project including the library and test projects will be available on Github for anyone to download and modifiy
+        \n\n\n. The main goal of this app is not to provide weather information services but to show software engineering princples in developing android apps.
+        I understant there is no single killer way of doing an app but this is my take. Anyone is welcome to send in comments.
+        
+        References
+        \n\n\n
+        
+        All weather data displayed using this app is from  \n
+        http://openweathermap.org \n \n \n
+       
+       All the flag images are from www.icondrawer.com \n \n
+       
+       All the weather icons are from  \n \n
+       http://vclouds.deviantart.com/art/VClouds-Weather-Icons-179152045
+       
+    </string>
+
+</resources>

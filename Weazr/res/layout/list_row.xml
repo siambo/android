@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    
+    android:orientation="horizontal"
+    android:padding="5dip" >
+ 
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dp">
+ 
+        <ImageView
+            android:id="@+id/weatherIconImg"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:src="@drawable/logoz"/>
+ 
+    </LinearLayout>
+ 
+    <!-- Title Of Song-->
+    <TextView
+        android:id="@+id/dayTempLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="15sp"
+        android:textStyle="bold"/>
+ 
+    <!-- Artist Name -->
+    <TextView
+        android:id="@+id/weatherDescriptionLbl"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dayTempLbl"
+        android:textColor="#343434"
+        android:textSize="12sp"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail" />
+ 
+    <!-- Rightend Duration -->
+    <TextView
+        android:id="@+id/dateLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/dayTempLbl"
+        android:gravity="right"
+        android:layout_marginRight="5dip"
+        android:textSize="12sp"
+        android:textStyle="bold"/>
+ 
+</RelativeLayout>

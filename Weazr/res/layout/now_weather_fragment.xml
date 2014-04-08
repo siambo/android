@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+   
+  <include layout="@layout/progress_bar_layout" />
+   
+       
+  <!-- data city and flag row -->  
+    <LinearLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical">
+    
+        <ImageView 
+            android:id="@+id/flagImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/us"
+            android:layout_gravity="center"
+            android:contentDescription="@string/flagValue"/>
+        
+        <TextView 
+            android:id="@+id/cityLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:text="@string/cityValue"/>
+        
+        <TextView 
+            android:id="@+id/dateLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:text="@string/dateValue"/>
+       
+    </LinearLayout>
+    
+   <!-- weather state image -->   
+    <LinearLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical">
+    
+        <ImageView 
+            android:id="@+id/imageImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/x01d"
+            android:contentDescription="@string/weatherImageContentDescriptionValue"/>
+        
+        <TextView
+            android:id="@+id/nowTempLbl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="40sp"
+            android:text="@string/nowTempValue" />
+        
+        <TextView 
+            android:id="@+id/weatherDescriptionLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="25sp"
+            android:text="@string/cityValue"/>
+    </LinearLayout>
+    
+    
+    <!-- weather detail row --> 
+    <LinearLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical">
+    
+        <TextView 
+            android:id="@+id/dividerLn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
+    </LinearLayout>
+    
+    <LinearLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	android:gravity="center">
+        <!-- layout 1 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <TextView
+            	android:id="@+id/minTempLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textSize="12sp"
+            	android:layout_gravity="left"
+            	android:text="@string/min" /> 
+
+        	<TextView
+            	android:id="@+id/maxTempLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:gravity="center"
+            	android:textSize="12sp"
+            	android:layout_gravity="left"
+            	android:text="@string/max" /> 
+        	<TextView 
+            	android:id="@+id/humidityLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textSize="12sp"
+            	android:layout_gravity="left"
+            	android:text="@string/humidity"/>
+        	<TextView 
+            	android:id="@+id/pressureLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textSize="12sp"
+            	android:layout_gravity="left"
+            	android:text="@string/pressure"/>
+        	<TextView 
+            	android:id="@+id/speedLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textSize="12sp"
+            	android:layout_gravity="left"
+            	android:text="@string/wind"/>
+        	<TextView 
+            	android:id="@+id/degreeLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textSize="12sp"
+            	android:layout_gravity="left"
+            	android:text="@string/degree"/>
+		</LinearLayout>
+		<!-- layout 2 -->
+		<LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+		    <TextView
+            	android:id="@+id/minTempValueLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textSize="12sp"
+            	android:text="@string/minTempValue" /> 
+
+        	<TextView
+            	android:id="@+id/maxTempValueLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:gravity="center"
+            	android:textSize="12sp"
+            	android:text="@string/maxTempValue" /> 
+        	<TextView 
+            	android:id="@+id/humidityValueLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textSize="12sp"
+            	android:text="@string/humidityValue"/>
+        	<TextView 
+            	android:id="@+id/pressureValueLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textSize="12sp"
+            	android:text="@string/pressureValue"/>
+        	<TextView 
+            	android:id="@+id/speedValueLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textSize="12sp"
+            	android:text="@string/speedValue"/>
+        	<TextView 
+            	android:id="@+id/degreeValueLbl"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textSize="12sp"
+            	android:text="@string/degreeValue"/>
+		</LinearLayout>
+    </LinearLayout> 
+</LinearLayout>
