@@ -38,21 +38,63 @@
     
     <string name="info">Weazr is a simple weather app that shows the current weather 
         and a 10 day forcast using web service APIs provided by Open Weather Map.
-        The weazr app android project including the library and test projects will be available on Github for anyone to download and modifiy
-        \n\n\n. The main goal of this app is not to provide weather information services but to show software engineering princples in developing android apps.
+        The weazr app android project including the library and test projects will be available on Github for anyone to download and modifiy.
+        The main goal of this app is not to provide weather information services but to show software engineering princples in developing android apps.
         I understant there is no single killer way of doing an app but this is my take. Anyone is welcome to send in comments.
-        
+        \n\n
         References
-        \n\n\n
+        \n\n
         
         All weather data displayed using this app is from  \n
-        http://openweathermap.org \n \n \n
+        http://openweathermap.org \n \n
        
        All the flag images are from www.icondrawer.com \n \n
        
        All the weather icons are from  \n \n
-       http://vclouds.deviantart.com/art/VClouds-Weather-Icons-179152045
+       http://vclouds.deviantart.com/art/VClouds-Weather-Icons-179152045 \n
+       
+       The Weazr app log was designed using LogoGarden \n http://www.logogarden.com/ \n\n\n
        
     </string>
+    
+    <!-- Preference details -->
+    <string name="pref_weazr_update_rate_title">Weather Update Rate</string>
+    <string name="pref_weazr_update_rate_summ">Number of times fresh weather data is brought to the app within a certain time frame</string>
 
+    <string-array name="pref_weazr_update_rate_entries">
+        <item>1-Hour</item>
+        <item>3-Hour</item>
+        <item>6-Hour</item>
+    </string-array>
+    
+    <string-array name="pref_weazr_update_rate_entries_values">
+        <item>1</item>
+        <item>3</item>
+        <item>6</item>
+    </string-array>
+    
+   <string name="pref_weazr_update_rate_default_values">1</string>
+   
+   <string name="pref_weazr_temp_unit_title">Temperature Unit</string>
+    <string name="pref_weazr_temp_unit_summ">An option to show temperature values in Celsius or Fahrenheit or both</string>
+
+    <string-array name="pref_weazr_temp_unit_entries">
+        <item>Fahrenheit</item>
+        <item>Celsius</item>
+        <item>Both</item>
+    </string-array>
+    
+    <string-array name="pref_weazr_temp_unit_entries_values">
+        <item>F</item>
+        <item>C</item>
+        <item>B</item>
+    </string-array>
+    
+   <string name="pref_weazr_temp_unit_default_values">F</string>
+
+   <string name="pref_weazr_run_bg_title">Run in the background</string>
+   <string name="pref_weazr_run_bg_summ">Allow the app to run in the background when it is invisible to you</string>
+   
+   <string name="pref_weazr_reboot_title">Run at reboot</string>
+   <string name="pref_weazr_reboot_summ">Allow the app to run when the operating system starts</string>
 </resources>

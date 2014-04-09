@@ -1,6 +1,7 @@
 package com.weazr.main;
 
 import com.weazr.main.R;
+import com.weazr.settings.SettingsActivity;
 import com.weazr.tabs.TabsPagerAdapter;
 import com.weazr.utilities.FormatBox;
 import com.weazrapi.location.WeazrLocationService;
@@ -16,12 +17,14 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -97,6 +100,27 @@ public class Main extends FragmentActivity implements ActionBar.TabListener{
 		return true;
 	}
 
+	
+	/**
+     * On selecting action bar icons
+     * */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+        case R.id.action_settings:
+            openSettings();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+ 
+
+    private void openSettings() {
+        Intent i = new Intent(Main.this, SettingsActivity.class);
+        startActivity(i);
+    }
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 		
