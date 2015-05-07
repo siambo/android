@@ -30,7 +30,7 @@ import android.widget.Toast;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class Main extends FragmentActivity implements ActionBar.TabListener{
 
-	private static final String TAG = "Main";
+	private static final String TAG = Main.class.getSimpleName();
 	
 	
 	private ViewPager viewPager;

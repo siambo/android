@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class MainBroadcastReceiver extends BroadcastReceiver {
 
-	private static final String TAG = "MainBroadcastReceiver";
+	private static final String TAG = MainBroadcastReceiver.class.getSimpleName();
 	
 	
 	@SuppressWarnings("unused")
