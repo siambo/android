@@ -1,23 +1,21 @@
 package com.weazrapi.webservice;
 
-import android.content.Context;
+import android.util.Log;
 
 public class WebServiceRunnable implements Runnable {
 
-	@SuppressWarnings("unused")
-	private static final String TAG = "WeatherNowRunnable";
+	private static final String TAG = WebServiceRunnable.class.getSimpleName();
 	
-	protected String nowWeatherJsonResponse;
+	protected String weatherRequestResponseJson;
 	@SuppressWarnings("unused")
 	private String dataLocation;
-	protected Context context;
 
 	protected WebServiceDataImporter webServiceDataImporter;
 	
-	public WebServiceRunnable(Context context, String dataLocation){
-		this.context = context;
+	public WebServiceRunnable(String dataLocation){
 		this.dataLocation = dataLocation;
 		this.webServiceDataImporter = new WebServiceDataImporter(dataLocation);
+		Log.i(TAG, ": created");
 	}
 	
 	@Override

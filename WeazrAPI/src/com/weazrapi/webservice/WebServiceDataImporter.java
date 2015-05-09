@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -14,7 +15,7 @@ import android.util.Log;
 
 public class WebServiceDataImporter {
 	
-	private static final String TAG = "WebServiceDataImporter";
+	private static final String TAG = WebServiceDataImporter.class.getSimpleName();
 	
 	private String dataLocation;
 	
@@ -34,7 +35,6 @@ public class WebServiceDataImporter {
 			InputStream isResponse = response.getEntity().getContent();
 			InputStreamReader instream = new InputStreamReader(isResponse);
 			BufferedReader responseBuffer = new BufferedReader(instream);
-
 			
 			String line = null;
 			while((line = responseBuffer.readLine()) != null){

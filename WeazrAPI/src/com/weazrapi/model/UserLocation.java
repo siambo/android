@@ -19,6 +19,9 @@ public class UserLocation implements Parcelable {
 		return cityName;
 	}
 
+	public String getCityNameWithNoSpace(){
+		return cityName.replaceAll("\\s+", "%20");
+	}
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}

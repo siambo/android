@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class NowForcastParser implements IParser{
 
-	private static final String TAG = "NowForcastParser";
+	private static final String TAG = NowForcastParser.class.getSimpleName();
 	
 	@SuppressWarnings("unused")
 	private String json;
