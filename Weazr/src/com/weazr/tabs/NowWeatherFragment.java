@@ -238,7 +238,7 @@ public class NowWeatherFragment extends Fragment {
 		
 		try{
 			WeazrLocationService locationService = new WeazrLocationService(context);
-			userLocation = locationService.readLocation();
+			userLocation = locationService.getLocation();
 			
 			SharedPreferences sharedPreferences = context.getSharedPreferences("weazrPreferences", Context.MODE_PRIVATE);
 			String cityName = sharedPreferences.getString("cityName", "");

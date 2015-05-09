@@ -56,8 +56,8 @@ public class Main extends FragmentActivity implements ActionBar.TabListener{
 		SharedPreferences sharedPreferences = getSharedPreferences("weazrPreferences",Context.MODE_PRIVATE);
 		
 		try{
-			WeazrLocationService locationService = new WeazrLocationService(getApplicationContext());
-			UserLocation userLocation = locationService.readLocation();
+			WeazrLocationManager locationService = new WeazrLocationManager(getApplicationContext());
+			UserLocation userLocation = locationService.getLocation();
 		    
 			Editor editor = sharedPreferences.edit();
 			editor.putString("cityName", userLocation.getCityName());

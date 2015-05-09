@@ -1,7 +1,7 @@
 package com.weazrapi;
 
 import com.example.weazrapi.R;
-import com.weazrapi.location.WeazrLocationService;
+import com.weazrapi.location.WeazrLocationManager;
 import com.weazrapi.model.UserLocation;
 
 import android.os.Bundle;
@@ -18,8 +18,8 @@ public class Main extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG,"onCreate called");
 		
-		WeazrLocationService weatherLocationService = new WeazrLocationService(getApplicationContext());
-		UserLocation userLocation = weatherLocationService.readLocation();
+		WeazrLocationManager weatherLocationService = new WeazrLocationManager(getApplicationContext());
+		UserLocation userLocation = weatherLocationService.getLocation();
 		Log.e(TAG, ":"+userLocation.getCityName()+", "+userLocation.getCountryCode());
 	}
 

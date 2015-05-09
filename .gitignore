@@ -5,6 +5,7 @@ target
 /com/
 reference
 *.asc
+*.class
 .settings
 .project
 .classpath
