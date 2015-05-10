@@ -1,22 +1,22 @@
 package com.weazr.tabs;
 
+import com.weazr.intent.manager.IIntentHandler;
 import com.weazr.intent.manager.MainBroadcastReceiver;
 import com.weazr.intent.manager.MainIntentFilter;
-import com.weazr.intent.manager.NowWeatherIntentHandler;
 import com.weazr.main.R;
-import com.weazr.main.WeazrErrorActivity;
+import com.weazr.utilities.FormatBox;
 import com.weazrapi.ForcastListener;
 import com.weazrapi.WeazrService;
 import com.weazrapi.model.Forcast;
 import com.weazrapi.model.NowForcast;
+import com.weazrapi.model.Temperature;
 import com.weazrapi.model.UserLocation;
-
+import com.weazrapi.model.Weather;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,8 +25,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class NowWeatherFragment extends Fragment implements ForcastListener {
@@ -77,104 +75,8 @@ public class NowWeatherFragment extends Fragment implements ForcastListener {
 	public void setNowForcast(NowForcast nowForcast) {
 		this.nowForcast = nowForcast;
 	}
-
-	public TextView getDateLbl() {
-		return dateLbl;
-	}
-
-	public void setDateLbl(TextView dateLbl) {
-		this.dateLbl = dateLbl;
-	}
-
-	public TextView getCityLbl() {
-		return cityLbl;
-	}
-
-	public void setCityLbl(TextView cityLbl) {
-		this.cityLbl = cityLbl;
-	}
-
-	public TextView getNowTempLbl() {
-		return nowTempLbl;
-	}
-
-	public void setNowTempLbl(TextView nowTempLbl) {
-		this.nowTempLbl = nowTempLbl;
-	}
-
-	public TextView getMinTempLbl() {
-		return minTempValueLbl;
-	}
-
-	public void setMinTempLbl(TextView minTempLbl) {
-		this.minTempValueLbl = minTempLbl;
-	}
-
-	public TextView getMaxTempLbl() {
-		return maxTempValueLbl;
-	}
-
-	public void setMaxTempLbl(TextView maxTempLbl) {
-		this.maxTempValueLbl = maxTempLbl;
-	}
-
-	public TextView getHumidityLbl() {
-		return humidityValueLbl;
-	}
-
-	public void setHumidityLbl(TextView humidityLbl) {
-		this.humidityValueLbl = humidityLbl;
-	}
-
-	public TextView getPressureLbl() {
-		return pressureValueLbl;
-	}
-
-	public void setPressureLbl(TextView pressureLbl) {
-		this.pressureValueLbl = pressureLbl;
-	}
-
-	public TextView getSpeedLbl() {
-		return speedValueLbl;
-	}
-
-	public void setSpeedLbl(TextView speedLbl) {
-		this.speedValueLbl = speedLbl;
-	}
-
-	public TextView getDegreeLbl() {
-		return degreeValueLbl;
-	}
-
-	public void setDegreeLbl(TextView degreeLbl) {
-		this.degreeValueLbl = degreeLbl;
-	}
 	
-	public TextView getWeatherDescriptionLbl() {
-		return weatherDescriptionLbl;
-	}
-
-	public void setWeatherDescriptionLbl(TextView weatherDescriptionLbl) {
-		this.weatherDescriptionLbl = weatherDescriptionLbl;
-	}
-
-	public ImageView getFlagImg() {
-		return flagImg;
-	}
-
-	public void setFlagImg(ImageView flagImg) {
-		this.flagImg = flagImg;
-	}
-
-	public ImageView getImageImg() {
-		return imageImg;
-	}
-
-	public void setImageImg(ImageView imageImg) {
-		this.imageImg = imageImg;
-	}
-
-
+	
 	public UserLocation getUserLocation() {
 		userLocation = weazrService.getUserLocation();
 		return userLocation; 
@@ -205,23 +107,26 @@ public class NowWeatherFragment extends Fragment implements ForcastListener {
 		maxTempLbl  = (TextView)rootView.findViewById(R.id.maxTempLbl);
 		humidityLbl = (TextView)rootView.findViewById(R.id.humidityLbl);
 		pressureLbl = (TextView)rootView.findViewById(R.id.pressureLbl);
-		speedLbl    = (TextView)rootView.findViewById(R.id.speedLbl);
-		degreeLbl   = (TextView)rootView.findViewById(R.id.degreeLbl);
+		speedLbl  = (TextView)rootView.findViewById(R.id.speedLbl);
+		degreeLbl  = (TextView)rootView.findViewById(R.id.degreeLbl);
 		
-		dateLbl 	= (TextView)rootView.findViewById(R.id.dateLbl);
-		cityLbl 	= (TextView)rootView.findViewById(R.id.cityLbl);
+		dateLbl = (TextView)rootView.findViewById(R.id.dateLbl);
+		cityLbl = (TextView)rootView.findViewById(R.id.cityLbl);
 		
 		nowTempLbl 	= (TextView)rootView.findViewById(R.id.nowTempLbl);
-		minTempValueLbl 	= (TextView)rootView.findViewById(R.id.minTempValueLbl);
-		maxTempValueLbl 	= (TextView)rootView.findViewById(R.id.maxTempValueLbl);
+		minTempValueLbl = (TextView)rootView.findViewById(R.id.minTempValueLbl);
+		maxTempValueLbl = (TextView)rootView.findViewById(R.id.maxTempValueLbl);
 		humidityValueLbl = (TextView)rootView.findViewById(R.id.humidityValueLbl);
 		pressureValueLbl = (TextView)rootView.findViewById(R.id.pressureValueLbl);
-		speedValueLbl 	= (TextView)rootView.findViewById(R.id.speedValueLbl);
+		speedValueLbl = (TextView)rootView.findViewById(R.id.speedValueLbl);
 		degreeValueLbl 	= (TextView)rootView.findViewById(R.id.degreeValueLbl);
 		weatherDescriptionLbl = (TextView)rootView.findViewById(R.id.weatherDescriptionLbl);
-		flagImg 	= (ImageView)rootView.findViewById(R.id.flagImg);
-		imageImg 	= (ImageView)rootView.findViewById(R.id.imageImg);
+		flagImg = (ImageView)rootView.findViewById(R.id.flagImg);
+		imageImg = (ImageView)rootView.findViewById(R.id.imageImg);
 		progressBar = (ProgressBar)rootView.findViewById(R.id.loading_time_progress_bar);
+		
+		weazrService.setForcastListener(this);
+		weazrService.getNowForcast();
 		
 		context.registerReceiver(new MainBroadcastReceiver(nowWeatherFragment), MainIntentFilter.getMainIntentFilter());
 		return rootView;
@@ -232,12 +137,6 @@ public class NowWeatherFragment extends Fragment implements ForcastListener {
 	public void onResume() {
 		super.onResume();
 		makeAllWidgetsGone();
-		try{
-			weazrService.setForcastListener(this);
-			weazrService.getNowForcast();
-		}catch(Exception e){
-			Log.e(TAG, ":onResume "+e.getLocalizedMessage());
-		}
 	}
 
 	public void makeAllWidgetsGone(){
@@ -279,17 +178,13 @@ public class NowWeatherFragment extends Fragment implements ForcastListener {
 			degreeLbl.setVisibility(View.GONE);
 	}
 	
-	public void makeProgressBarGone(){
+	public void makeProgressBarInvisible(){
 		if(progressBarLayout.isShown())
 			progressBarLayout.setVisibility(View.GONE);
 		if(progressBar.isShown())
 			progressBar.setVisibility(View.GONE);
 	}
 	
-/*	public void makeProgressBarVisible(){
-		if(!dateLbl.isShown())
-			dateLbl.setVisibility(View.VISIBLE);
-	}*/
 	
 	public void makeWidgetsVisible(){
 		if(!dateLbl.isShown())
@@ -329,19 +224,61 @@ public class NowWeatherFragment extends Fragment implements ForcastListener {
 		if(!degreeLbl.isShown())
 			degreeLbl.setVisibility(View.VISIBLE);
 	}
+	
+	public void displayForcast(Forcast forcast){
+		Log.d(TAG,"handle(): handling intent");
+		
+		makeProgressBarInvisible();
+		makeWidgetsVisible();
+		
+		Weather nowWeather = forcast.getWeatherList().get(0);
+		
+		String tempDate = nowWeather.getDate();
+		String tempCity = forcast.getCity().getName();
+		
+		Temperature temperature = nowWeather.getTemperature();
+		
+		String tempNowTemp = FormatBox.kelvinToFahrenheit(temperature.getNowTemperature());
+		String tempMinTemp = FormatBox.kelvinToFahrenheit(temperature.getMinTemperature());
+		String tempMaxTemp = FormatBox.kelvinToFahrenheit(temperature.getMaxTemperature());
+		
+		String tempWeatherDescription = nowWeather.getWeatherDescription().getDescription();
+		String tempHumidity = nowWeather.getHumidity();
+		String tempPressure = nowWeather.getPressure();
+		String tempSpeed = nowWeather.getSpeed();
+		String tempDegree = nowWeather.getDegree();
+		String tempWeatherIcon = nowWeather.getWeatherDescription().getIcon();
+		
+		String tempFlagImgIcon = getUserLocation().getCountryCode();
+
+		
+		dateLbl.setText(FormatBox.getFormattedDate(tempDate));
+		
+		cityLbl.setText(tempCity);
+		nowTempLbl.setText(tempNowTemp);
+		minTempLbl.setText(tempMinTemp);
+		maxTempLbl.setText(tempMaxTemp);
+		weatherDescriptionLbl.setText(tempWeatherDescription);
+		humidityLbl.setText(tempHumidity);
+		pressureLbl.setText(tempPressure);
+		speedLbl.setText(tempSpeed);
+		degreeLbl.setText(tempDegree);
+		
+		int weatherIcon = context.getResources().getIdentifier("x"+tempWeatherIcon, IIntentHandler.DRAWABLE_RT, IIntentHandler.R_PACKAGE);
+		imageImg.setImageResource(weatherIcon);
+		
+		int flagIcon = context.getResources().getIdentifier(tempFlagImgIcon, IIntentHandler.DRAWABLE_RT, IIntentHandler.R_PACKAGE);
+		flagImg.setImageResource(flagIcon);
+	}
 
 	@Override
 	public void onForcastReceived(final Forcast forcast) {
-		Log.i(TAG, "Forcast received maate"+forcast.toString());
-		final NowWeatherIntentHandler nowHandler = new NowWeatherIntentHandler(this, forcast);
-		this.getActivity().runOnUiThread(new Runnable(){
+		Log.i(TAG, "Forcast received: "+forcast.toString());
 
+		this.getActivity().runOnUiThread(new Runnable(){
 			@Override
 			public void run() {
-				nowHandler.handle(forcast);
+				displayForcast(forcast);
 			}});
-		
-		
 	}
-	
 }

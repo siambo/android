@@ -27,7 +27,7 @@ public class FormatBox {
 	
 	public static String kelvinToFahrenheit(String kelvin){
 		double temp = (9/5) * (Float.parseFloat(kelvin) - 273.15) +32;
-		return String.valueOf(Math.round(temp));
+		return String.valueOf(Math.round(temp))+" ºF";
 	}
 	
 	public static String getFormattedDate(String str){
