@@ -50,11 +50,10 @@ public class WeazrService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		Log.i(TAG, " WeazrService created");
-		
 		weazrLocationManager = new WeazrLocationManager(this);
+		userLocation = weazrLocationManager.getLocation();
 	}
 
-	
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -68,16 +67,22 @@ public class WeazrService extends Service {
 	public void setForcastListener(ForcastListener forcastListener) {
 		this.forcastListener = forcastListener;
 	}
-	
+
+	public UserLocation getUserLocation() {
+		return userLocation;
+	}
+
+	public void setUserLocation(UserLocation userLocation) {
+		this.userLocation = userLocation;
+	}
+
 	public void getNowForcast(){
-		userLocation = weazrLocationManager.getLocation();
 		String cityName = FormatBox.removeWhiteSpace(userLocation.getCityName());
 		weatherUrlLocation = WebServiceConstant.getNowWeatherUrl(cityName, userLocation.getCountryCode());
 		executor.execute(new NowWebServiceRunnable(weatherUrlLocation,forcastListener));
 	}
 	
 	public void get10DaysForcast(){
-		userLocation = weazrLocationManager.getLocation();
 		weatherUrlLocation = WebServiceConstant.getTenDayWeatherUrl(userLocation.getCityNameWithNoSpace(), userLocation.getCountryCode());
 		executor.execute(new TenDayWebServiceRunnable(weatherUrlLocation, forcastListener));
 	}

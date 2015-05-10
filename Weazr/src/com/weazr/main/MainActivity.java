@@ -3,34 +3,35 @@ package com.weazr.main;
 import com.weazr.main.R;
 import com.weazr.settings.SettingsActivity;
 import com.weazr.tabs.TabsPagerAdapter;
-import com.weazr.utilities.FormatBox;
-import com.weazrapi.location.WeazrLocationService;
+import com.weazrapi.WeazrService;
 import com.weazrapi.model.NowForcast;
 import com.weazrapi.model.UserLocation;
-import com.weazrapi.webservice.WebServiceConstant;
-import com.weazrapi.webservice.WebServiceRunnable;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class Main extends FragmentActivity implements ActionBar.TabListener{
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener{
 
-	private static final String TAG = Main.class.getSimpleName();
+	private static final String TAG = MainActivity.class.getSimpleName();
 	
 	
 	private ViewPager viewPager;
@@ -44,31 +45,16 @@ public class Main extends FragmentActivity implements ActionBar.TabListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Log.d(TAG, "Main onCreate");
+
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
+		
 		tabAdapter  = new TabsPagerAdapter(getSupportFragmentManager());
 		
 		viewPager.setAdapter(tabAdapter);
-		actionBar.setHomeButtonEnabled(false);
+		//actionBar.setHomeButtonEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
-		SharedPreferences sharedPreferences = getSharedPreferences("weazrPreferences",Context.MODE_PRIVATE);
-		
-		try{
-			WeazrLocationManager locationService = new WeazrLocationManager(getApplicationContext());
-			UserLocation userLocation = locationService.getLocation();
-		    
-			Editor editor = sharedPreferences.edit();
-			editor.putString("cityName", userLocation.getCityName());
-			editor.putString("countryName", userLocation.getCountryName());
-			editor.putString("countryCode", userLocation.getCountryCode());
-			editor.commit();
-			
-		}catch(Exception e){
-			Toast.makeText(this, "Location inaccessible in shared preferneces", Toast.LENGTH_LONG).show();
-		}
-				
     	viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			
 			@Override
@@ -90,9 +76,23 @@ public class Main extends FragmentActivity implements ActionBar.TabListener{
 		}
 		
 		
-		Log.d(TAG, "Main onCreate ends");
+		Log.d(TAG, " created");
 	}
 	
+	  @Override
+	   public boolean onKeyDown(int keyCode, KeyEvent event)
+	    {
+	        if (keyCode == KeyEvent.KEYCODE_BACK)
+	        {
+	        	try{
+	            	moveTaskToBack(true);
+	            }catch(Exception e){
+	            	Log.e(TAG, "onKeyDown(): "+e.getLocalizedMessage());
+	            }
+	            return true;
+	        }
+	        return false;
+	    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,9 +116,8 @@ public class Main extends FragmentActivity implements ActionBar.TabListener{
         }
     }
  
-
     private void openSettings() {
-        Intent i = new Intent(Main.this, SettingsActivity.class);
+        Intent i = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(i);
     }
 	@Override
@@ -135,5 +134,5 @@ public class Main extends FragmentActivity implements ActionBar.TabListener{
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	
 	}
-
+	
 }

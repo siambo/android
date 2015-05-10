@@ -7,7 +7,8 @@ import com.weazr.intent.manager.MainBroadcastReceiver;
 import com.weazr.intent.manager.MainIntentFilter;
 import com.weazr.main.R;
 import com.weazr.utilities.FormatBox;
-import com.weazrapi.location.WeazrLocationService;
+import com.weazrapi.ForcastListener;
+import com.weazrapi.model.Forcast;
 import com.weazrapi.model.NowForcast;
 import com.weazrapi.model.TenDayForcast;
 import com.weazrapi.model.UserLocation;
@@ -31,7 +32,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class TenDayForcastFragment extends Fragment {
+public class TenDayForcastFragment extends Fragment implements ForcastListener {
 
 	private static final String TAG = "TenDayForcastFragment";
 	
@@ -102,29 +103,6 @@ public class TenDayForcastFragment extends Fragment {
 	public void onStart() {
 		super.onStart();
 		
-		try{
-			WeazrLocationService locationService = new WeazrLocationService(context);
-			userLocation = locationService.getLocation();
-			
-			SharedPreferences sharedPreferences = context.getSharedPreferences("weazrPreferences", Context.MODE_PRIVATE);
-			String cityName = sharedPreferences.getString("cityName", "");
-			String countryCode = sharedPreferences.getString("countryCode", "");
-		
-			Log.e(TAG,"Preferences reading: "+cityName+", "+countryCode);
-			
-			if(cityName != null && countryCode != null){
-				tenDayForcast = new TenDayForcast();
-				
-				webServiceRunnable = new TenDayWebServiceRunnable(context, tenDayForcast, 
-									 WebServiceConstant.getTenDayWeatherUrl(
-											  FormatBox.removeWhiteSpace(cityName),countryCode));
-
-				thread = new Thread(webServiceRunnable);
-				thread.start();
-			}
-		}catch(Exception e){
-			Toast.makeText(this.getActivity(), "Location inaccessible", Toast.LENGTH_LONG).show();
-		}
 	}
 	
 	public void makeProgressBarLayoutGone(){
@@ -135,6 +113,12 @@ public class TenDayForcastFragment extends Fragment {
 	public void makeProgressBarLayoutVisible(){
 		if(!progressBarLayout.isShown())
 			progressBarLayout.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	public void onForcastReceived(Forcast arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

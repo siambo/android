@@ -1,25 +1,23 @@
 package com.weazr.tabs;
-import java.util.Locale;
 
 import com.weazr.intent.manager.MainBroadcastReceiver;
 import com.weazr.intent.manager.MainIntentFilter;
+import com.weazr.intent.manager.NowWeatherIntentHandler;
 import com.weazr.main.R;
-import com.weazr.utilities.FormatBox;
-import com.weazrapi.location.WeazrLocationService;
+import com.weazr.main.WeazrErrorActivity;
+import com.weazrapi.ForcastListener;
+import com.weazrapi.WeazrService;
+import com.weazrapi.model.Forcast;
 import com.weazrapi.model.NowForcast;
 import com.weazrapi.model.UserLocation;
-import com.weazrapi.webservice.NowWebServiceRunnable;
-import com.weazrapi.webservice.WebServiceConstant;
-import com.weazrapi.webservice.WebServiceRunnable;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,19 +25,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class NowWeatherFragment extends Fragment {
+public class NowWeatherFragment extends Fragment implements ForcastListener {
 
-	private static final String TAG = "TopRatedFragment";
+	private static final String TAG = NowWeatherFragment.class.getSimpleName();
 	
 
+	private WeazrService weazrService;
+	
 	private NowForcast nowForcast;
-	private NowWebServiceRunnable webServiceRunnable;
 	private UserLocation userLocation;
-	private Thread thread;
 	
 	private NowWeatherFragment nowWeatherFragment = this;
 	private Context context;
@@ -66,6 +64,11 @@ public class NowWeatherFragment extends Fragment {
 	private ImageView imageImg;
 
 	private ProgressBar progressBar;
+	
+	public NowWeatherFragment(WeazrService weazrService){
+		super();
+		this.weazrService = weazrService;
+	}
 	
 	public NowForcast getNowForcast() {
 		return nowForcast;
@@ -173,14 +176,9 @@ public class NowWeatherFragment extends Fragment {
 
 
 	public UserLocation getUserLocation() {
-		return userLocation;
+		userLocation = weazrService.getUserLocation();
+		return userLocation; 
 	}
-
-
-	public void setUserLocation(UserLocation userLocation) {
-		this.userLocation = userLocation;
-	}
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -196,11 +194,10 @@ public class NowWeatherFragment extends Fragment {
 
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) 
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
 	{
 		
-		Log.d(TAG,"started creating view");
+		Log.i(TAG," NowWeatherForcast view being created");
 		
 		View rootView = inflater.inflate(R.layout.now_weather_fragment, container, false);
 		progressBarLayout = (View)rootView.findViewById(R.id.progressBarLayout);
@@ -235,35 +232,11 @@ public class NowWeatherFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		makeAllWidgetsGone();
-		
 		try{
-			WeazrLocationService locationService = new WeazrLocationService(context);
-			userLocation = locationService.getLocation();
-			
-			SharedPreferences sharedPreferences = context.getSharedPreferences("weazrPreferences", Context.MODE_PRIVATE);
-			String cityName = sharedPreferences.getString("cityName", "");
-			String countryCode = sharedPreferences.getString("countryCode", "");
-		
-			Log.e(TAG,"Preferences reading: "+cityName+", "+countryCode);
-/*			if(userLocation != null){
-				nowForcast = new NowForcast();
-				webServiceRunnable = new WebServiceRunnable(context, nowForcast, 
-						WebServiceConstant.getNowWeatherUrl(
-								FormatBox.removeWhiteSpace(
-										userLocation.getCityName()),userLocation.getCountryCode()));*/
-			
-			if(cityName != null && countryCode != null){
-				nowForcast = new NowForcast();
-				
-				webServiceRunnable = new NowWebServiceRunnable(context, nowForcast, 
-									 WebServiceConstant.getNowWeatherUrl(
-											  FormatBox.removeWhiteSpace(cityName),countryCode));
-
-				thread = new Thread(webServiceRunnable);
-				thread.start();
-			}
+			weazrService.setForcastListener(this);
+			weazrService.getNowForcast();
 		}catch(Exception e){
-			Toast.makeText(this.getActivity(), "Location inaccessible", Toast.LENGTH_LONG).show();
+			Log.e(TAG, ":onResume "+e.getLocalizedMessage());
 		}
 	}
 
@@ -355,6 +328,20 @@ public class NowWeatherFragment extends Fragment {
 			speedLbl.setVisibility(View.VISIBLE);
 		if(!degreeLbl.isShown())
 			degreeLbl.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	public void onForcastReceived(final Forcast forcast) {
+		Log.i(TAG, "Forcast received maate"+forcast.toString());
+		final NowWeatherIntentHandler nowHandler = new NowWeatherIntentHandler(this, forcast);
+		this.getActivity().runOnUiThread(new Runnable(){
+
+			@Override
+			public void run() {
+				nowHandler.handle(forcast);
+			}});
+		
+		
 	}
 	
 }

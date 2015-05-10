@@ -1,25 +1,22 @@
 package com.weazr.intent.manager;
 
-import com.weazr.main.R;
 import com.weazr.tabs.NowWeatherFragment;
-import com.weazr.tabs.TenDayForcastFragment;
 import com.weazr.utilities.FormatBox;
-import com.weazrapi.model.NowForcast;
+import com.weazrapi.model.Forcast;
 import com.weazrapi.model.Weather;
-
 import android.content.Context;
-import android.content.Intent;
+
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
 
-public class NowWeatherIntentHandler implements IIntentHandler {
+public class NowWeatherIntentHandler {
 
 	private static final String TAG = "NowWeatherIntentHandler";
 	
 	private NowWeatherFragment fragment;
 	
-	public NowWeatherIntentHandler(Fragment fragment){
+	public NowWeatherIntentHandler(Fragment fragment, Forcast forcast){
 		try{
 			if(fragment instanceof NowWeatherFragment)
 				this.fragment = (NowWeatherFragment)fragment;
@@ -28,12 +25,10 @@ public class NowWeatherIntentHandler implements IIntentHandler {
 		}
 	}
 	
-	@Override
-	public void handle(Intent intent) {
+	public void handle(Forcast nowForcast) {
 
 		Log.d(TAG,"handle(): handling intent");
 		Context context = fragment.getActivity().getApplicationContext();
-		NowForcast nowForcast =(NowForcast)intent.getExtras().getParcelable("com.weazrapi.model.NowForcast");
 		
 		fragment.makeProgressBarGone();
 		fragment.makeWidgetsVisible();
@@ -51,14 +46,16 @@ public class NowWeatherIntentHandler implements IIntentHandler {
 		String tempSpeed = nowWeather.getSpeed();
 		String tempDegree = nowWeather.getDegree();
 		String tempWeatherIcon = nowWeather.getWeatherDescription().getIcon();
+		
 		String tempFlagImgIcon = fragment.getUserLocation().getCountryCode();
+
 		
 		fragment.getDateLbl().setText(FormatBox.getFormattedDate(tempDate));
 		
 		fragment.getCityLbl().setText(tempCity);
-		fragment.getNowTempLbl().setText(tempNowTemp+"¼");
-		fragment.getMinTempLbl().setText(tempMinTemp+"¼");
-		fragment.getMaxTempLbl().setText(tempMaxTemp+"¼");
+		fragment.getNowTempLbl().setText(tempNowTemp+"ï¿½");
+		fragment.getMinTempLbl().setText(tempMinTemp+"ï¿½");
+		fragment.getMaxTempLbl().setText(tempMaxTemp+"ï¿½");
 		fragment.getWeatherDescriptionLbl().setText(tempWeatherDescription);
 		fragment.getHumidityLbl().setText(tempHumidity);
 		fragment.getPressureLbl().setText(tempPressure);

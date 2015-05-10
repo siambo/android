@@ -1,7 +1,6 @@
 package com.weazr.intent.manager;
 
 import java.util.HashMap;
-import com.weazrapi.intents.WeazrIntentActionConstant;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +19,8 @@ public class MainBroadcastReceiver extends BroadcastReceiver {
 	public MainBroadcastReceiver(Fragment fragment){
 		this.fragment = fragment;
 		intentHandlerPool = new HashMap<String,IIntentHandler>();
-		intentHandlerPool.put(WeazrIntentActionConstant.ACTION_WEATHER_NOW_ARRIVED, new NowWeatherIntentHandler(fragment));
-		intentHandlerPool.put(WeazrIntentActionConstant.ACTION_10DAY_FORCAST_ARRIVED, new TenDayWeatherIntentHandler(fragment));
+		/*intentHandlerPool.put(WeazrIntentActionConstant.ACTION_WEATHER_NOW_ARRIVED, new NowWeatherIntentHandler(fragment));
+		intentHandlerPool.put(WeazrIntentActionConstant.ACTION_10DAY_FORCAST_ARRIVED, new TenDayWeatherIntentHandler(fragment));*/
 	}
 	
 	
