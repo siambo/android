@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class WebServiceConstant {
 
-	private static final String TAG = "WebServiceConstant";
+	private static final String TAG = WebServiceConstant.class.getSimpleName();
 	
 	private static final String NOW_WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 	private static final String TEN_DAY_WEATHER_FORCAST_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?q=";

@@ -26,6 +26,7 @@ public class TenDayForcast extends Forcast{
 			return new TenDayForcast[size];
 		}
 	};
+	
 
 	private  TenDayForcast(Parcel in) {
 		super(in);

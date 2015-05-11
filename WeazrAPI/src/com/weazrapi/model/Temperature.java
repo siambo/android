@@ -12,6 +12,10 @@ public class Temperature implements Parcelable{
 	private String nightTemperature;
 	private String eveningTemperature;
 	private String morningTemperature;
+	private String unit;
+	
+	private final String TEMP_UNIT = "ºC";
+	
 	
 	public Temperature(){}
 	
@@ -57,6 +61,15 @@ public class Temperature implements Parcelable{
 	public void setMorningTemperature(String morningTemperature) {
 		this.morningTemperature = morningTemperature;
 	}
+	
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
 	@Override
 	public String toString() {
 		return "Temperature [nowTemperature=" + nowTemperature
@@ -64,7 +77,7 @@ public class Temperature implements Parcelable{
 				+ minTemperature + ", maxTemperature=" + maxTemperature
 				+ ", nightTemperature=" + nightTemperature
 				+ ", eveningTemperature=" + eveningTemperature
-				+ ", morningTemperature=" + morningTemperature + "]";
+				+ ", morningTemperature=" + morningTemperature + ", unit="+unit+"]";
 	}
 	
 	@Override
@@ -81,6 +94,7 @@ public class Temperature implements Parcelable{
 		dest.writeString(nightTemperature);
 		dest.writeString(eveningTemperature);
 		dest.writeString(morningTemperature);
+		dest.writeString(unit);
 	}
 
 	public static final Parcelable.Creator<Temperature> CREATOR = new Parcelable.Creator<Temperature>(){
@@ -105,6 +119,7 @@ public class Temperature implements Parcelable{
 		nightTemperature = in.readString();
 		eveningTemperature = in.readString();
 		morningTemperature = in.readString();
+		unit=in.readString();
 	}
 	
 }

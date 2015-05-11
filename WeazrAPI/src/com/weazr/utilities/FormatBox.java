@@ -7,7 +7,11 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.util.Log;
+
 public class FormatBox {
+	
+	private static final String TAG = FormatBox.class.getSimpleName();
 	
 	public static String removeWhiteSpace(String str){
 		String pattern = "[\\s]";
@@ -26,8 +30,14 @@ public class FormatBox {
 	}
 	
 	public static String kelvinToFahrenheit(String kelvin){
-		double temp = (9/5) * (Float.parseFloat(kelvin) - 273.15) +32;
-		return String.valueOf(Math.round(temp));
+		try{
+			double temp = (9/5) * (Float.parseFloat(kelvin) - 273.15) +32;
+			return String.valueOf(Math.round(temp));
+		}catch(Exception e){
+			Log.e(TAG, "Something serious happened here");
+			return null;
+		}
+		
 	}
 	
 	public static String getFormattedDate(String str){

@@ -16,7 +16,7 @@ import com.weazrapi.model.WeatherDescription;
 
 public class TenDayForcastParser implements IParser {
 
-	private static final String TAG = "TenDayForcastParser";
+	private static final String TAG = TenDayForcastParser.class.getSimpleName();
 	
 	private String json;
 	private JSONObject jsonObject;
@@ -79,49 +79,49 @@ public class TenDayForcastParser implements IParser {
 					weather.setSnow(innerObject.getString("snow"));
 				}catch(Exception e){
 					weather.setSnow("-");
-					Log.e(TAG,"error snow parse() "+e.getLocalizedMessage());
+					Log.w(TAG,"error snow parse() "+e.getLocalizedMessage());
 				}
 				
 				try{
 					weather.setClouds(innerObject.getString("clouds"));
 				}catch(Exception e){
 					weather.setClouds("-");
-					Log.e(TAG,"error clouds parse() "+e.getLocalizedMessage());
+					Log.w(TAG,"error clouds parse() "+e.getLocalizedMessage());
 				}
 				
 				try{
 					weather.setRain(innerObject.getString("rain"));
 				}catch(Exception e){
 					weather.setRain("-");
-					Log.e(TAG,"error rain parse() "+e.getLocalizedMessage());
+					Log.w(TAG,"error rain parse() "+e.getLocalizedMessage());
 				}
 				
 				try{
 					weather.setThunderstorm(innerObject.getString("thunderstorm"));
 				}catch(Exception e){
 					weather.setThunderstorm("-");
-					Log.e(TAG,"error thunderstorm parse() "+e.getLocalizedMessage());
+					Log.w(TAG,"error thunderstorm parse() "+e.getLocalizedMessage());
 				}
 				
 				try{
 					weather.setDrizzle(innerObject.getString("drizzle"));
 				}catch(Exception e){
 					weather.setDrizzle("-");
-					Log.e(TAG,"error drizzle parse() "+e.getLocalizedMessage());
+					Log.w(TAG,"error drizzle parse() "+e.getLocalizedMessage());
 				}
 				
 				try{
 					weather.setAtmosphere(innerObject.getString("atmosphere"));
 				}catch(Exception e){
 					weather.setAtmosphere("-");
-					Log.e(TAG,"error atmosphere parse() "+e.getLocalizedMessage());
+					Log.w(TAG,"error atmosphere parse() "+e.getLocalizedMessage());
 				}
 				
 				try{
 					weather.setExtreme(innerObject.getString("extreme"));
 				}catch(Exception e){
 					weather.setExtreme("-");
-					Log.e(TAG,"error extreme parse() "+e.getLocalizedMessage());
+					Log.w(TAG,"error extreme parse() "+e.getLocalizedMessage());
 				}
 				
 				JSONObject tempObject = innerObject.getJSONObject("temp");
@@ -148,7 +148,7 @@ public class TenDayForcastParser implements IParser {
 			}
 			
 		}catch(Exception e){
-			Log.e(TAG,"outer try error parse():"+e.getLocalizedMessage());
+			Log.e(TAG,"Ten Day Forcast Parser error parse():"+e.getLocalizedMessage());
 		}
 	}
 

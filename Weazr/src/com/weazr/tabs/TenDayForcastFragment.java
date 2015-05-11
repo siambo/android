@@ -1,52 +1,43 @@
 package com.weazr.tabs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
-import com.weazr.intent.manager.MainBroadcastReceiver;
-import com.weazr.intent.manager.MainIntentFilter;
 import com.weazr.main.R;
-import com.weazr.utilities.FormatBox;
-import com.weazrapi.location.WeazrLocationService;
-import com.weazrapi.model.NowForcast;
-import com.weazrapi.model.TenDayForcast;
-import com.weazrapi.model.UserLocation;
-import com.weazrapi.webservice.NowWebServiceRunnable;
-import com.weazrapi.webservice.TenDayWebServiceRunnable;
-import com.weazrapi.webservice.WebServiceConstant;
-import com.weazrapi.webservice.WebServiceRunnable;
+import com.weazrapi.TenDayForcastListener;
+import com.weazrapi.WeazrService;
+import com.weazrapi.model.Forcast;
+import com.weazrapi.model.Weather;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-public class TenDayForcastFragment extends Fragment {
+public class TenDayForcastFragment extends Fragment implements TenDayForcastListener{
 
-	private static final String TAG = "TenDayForcastFragment";
+	private static final String TAG = TenDayForcastFragment.class.getSimpleName();
+	
+	private WeazrService weazrService;
 	
 	private Context context;
 	private TenDayForcastFragment tenDayForcastFragment = this;
 	
-	private UserLocation userLocation;
-	private TenDayForcast tenDayForcast;
-	private WebServiceRunnable webServiceRunnable;
-	
-	private Thread thread;
+	private WeazrListAdapter adapter;
+
 	
 	private ListView listView;
 	private View progressBarLayout;
 	private ProgressBar progressBar;
+	
+	public TenDayForcastFragment(WeazrService weazrService){
+		this.weazrService = weazrService;
+	}
     
 	public Context getContext() {
 		return context;
@@ -94,7 +85,7 @@ public class TenDayForcastFragment extends Fragment {
 		this.listView = (ListView)rootView.findViewById(R.id.list);
 		this.progressBarLayout = (View)rootView.findViewById(R.id.progressBarLayout);
 		
-		context.registerReceiver(new MainBroadcastReceiver(tenDayForcastFragment), MainIntentFilter.getMainIntentFilter());
+		
 		return rootView;
 	}
 	
@@ -102,31 +93,15 @@ public class TenDayForcastFragment extends Fragment {
 	public void onStart() {
 		super.onStart();
 		
-		try{
-			WeazrLocationService locationService = new WeazrLocationService(context);
-			userLocation = locationService.readLocation();
-			
-			SharedPreferences sharedPreferences = context.getSharedPreferences("weazrPreferences", Context.MODE_PRIVATE);
-			String cityName = sharedPreferences.getString("cityName", "");
-			String countryCode = sharedPreferences.getString("countryCode", "");
-		
-			Log.e(TAG,"Preferences reading: "+cityName+", "+countryCode);
-			
-			if(cityName != null && countryCode != null){
-				tenDayForcast = new TenDayForcast();
-				
-				webServiceRunnable = new TenDayWebServiceRunnable(context, tenDayForcast, 
-									 WebServiceConstant.getTenDayWeatherUrl(
-											  FormatBox.removeWhiteSpace(cityName),countryCode));
-
-				thread = new Thread(webServiceRunnable);
-				thread.start();
-			}
-		}catch(Exception e){
-			Toast.makeText(this.getActivity(), "Location inaccessible", Toast.LENGTH_LONG).show();
-		}
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		weazrService.setTenDayForcastListener(this);
+		weazrService.get10DaysForcast();
+	}
+
 	public void makeProgressBarLayoutGone(){
 		if(progressBarLayout.isShown())
 			progressBarLayout.setVisibility(View.GONE);
@@ -135,6 +110,24 @@ public class TenDayForcastFragment extends Fragment {
 	public void makeProgressBarLayoutVisible(){
 		if(!progressBarLayout.isShown())
 			progressBarLayout.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	public void onForcastReceived(final Forcast forcast) {
+		Log.i(TAG, "Forcast received: "+forcast.toString());
+		
+		
+		this.getActivity().runOnUiThread(new Runnable(){
+
+			@Override
+			public void run() {
+				makeProgressBarLayoutGone();
+				List<Weather> weazrList = forcast.getWeatherList();
+				adapter = new WeazrListAdapter(tenDayForcastFragment, weazrList);
+				getListView().setAdapter(adapter);
+				
+			}});
+		
 	}
 
 }

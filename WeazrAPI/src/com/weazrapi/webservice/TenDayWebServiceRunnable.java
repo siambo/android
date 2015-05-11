@@ -1,38 +1,36 @@
 package com.weazrapi.webservice;
 
-import com.weazrapi.intents.WeazrIntentActionConstant;
+import com.weazrapi.TenDayForcastListener;
 import com.weazrapi.model.TenDayForcast;
 import com.weazrapi.parser.TenDayForcastParser;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 public class TenDayWebServiceRunnable extends WebServiceRunnable {
 
-	private static final String TAG = "TenDayWebServiceRunnable";
+	private static final String TAG = TenDayWebServiceRunnable.class.getSimpleName();
 	
 	private TenDayForcast tenDayForcast;
+	private TenDayForcastParser tenDayForcastParser;
+	private TenDayForcastListener tenDayForcastListener;
 	
-	public TenDayWebServiceRunnable(Context context, TenDayForcast tenDayForcast, String dataLocation) {
-		super(context, dataLocation);
-		this.tenDayForcast = tenDayForcast;
+	public TenDayWebServiceRunnable(String dataLocation, TenDayForcastListener tenDayForcastListener) {
+		super(dataLocation);
+		this.tenDayForcastListener = tenDayForcastListener;
+		this.tenDayForcast = new TenDayForcast();
 	}
 
 	@Override
 	public void run() {
 		
 		try{
-			nowWeatherJsonResponse = webServiceDataImporter.getRemoteData();
-			TenDayForcastParser parser = new TenDayForcastParser(tenDayForcast, nowWeatherJsonResponse);
-			parser.parse();
-			
-			Intent tenDayWeatherIntent = new Intent(WeazrIntentActionConstant.ACTION_10DAY_FORCAST_ARRIVED);
-			tenDayWeatherIntent.putExtra("com.weazrapi.model.TenDayForcast",tenDayForcast);
-			context.sendBroadcast(tenDayWeatherIntent, WeazrIntentActionConstant.ACTION_PERMISSION_WEAZR);
+			weatherRequestResponseJson = webServiceDataImporter.getRemoteData();
+			tenDayForcastParser = new TenDayForcastParser(tenDayForcast, weatherRequestResponseJson);
+			tenDayForcastParser.parse();
+			tenDayForcastListener.onForcastReceived(tenDayForcast);
 								
 		} catch (Exception e) {
-			Log.e(TAG,"Background error: "+e.getLocalizedMessage());
+			Log.e(TAG,"10 day forcast thread error: "+e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 	}

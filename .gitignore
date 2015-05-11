@@ -1,0 +1,14 @@
+target
+**/bin/
+**/gen/
+.DS_Store
+/com/
+reference
+*.asc
+*.class
+.settings
+.project
+.classpath
+*.releaseBackup
+release.properties
+com_crashlytics_export_strings.xml
