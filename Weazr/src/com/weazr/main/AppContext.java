@@ -1,14 +1,7 @@
 package com.weazr.main;
 
 import com.weazrapi.WeazrService;
-import com.weazrapi.model.Forcast;
-
 import android.app.Application;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.util.Log;
 
 public class AppContext extends Application {

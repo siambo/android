@@ -26,7 +26,8 @@ public class WeazrService extends Service {
 	private UserLocation userLocation;
 	private String weatherUrlLocation;
 	
-	private ForcastListener forcastListener;
+	private NowForcastListener nowForcastListener;
+	private TenDayForcastListener tenDayForcastListener;
 	
 	private IBinder mBinder = new WeazrBinder();
 	
@@ -60,12 +61,20 @@ public class WeazrService extends Service {
 		executor.shutdown();
 	}
 
-	public ForcastListener getForcastListener() {
-		return forcastListener;
+	public NowForcastListener getForcastListener() {
+		return nowForcastListener;
 	}
 
-	public void setForcastListener(ForcastListener forcastListener) {
-		this.forcastListener = forcastListener;
+	public void setNowForcastListener(NowForcastListener nowForcastListener) {
+		this.nowForcastListener = nowForcastListener;
+	}
+	
+	public TenDayForcastListener getTenDayForcastListener() {
+		return tenDayForcastListener;
+	}
+
+	public void setTenDayForcastListener(TenDayForcastListener tenDayForcastListener) {
+		this.tenDayForcastListener = tenDayForcastListener;
 	}
 
 	public UserLocation getUserLocation() {
@@ -79,11 +88,11 @@ public class WeazrService extends Service {
 	public void getNowForcast(){
 		String cityName = FormatBox.removeWhiteSpace(userLocation.getCityName());
 		weatherUrlLocation = WebServiceConstant.getNowWeatherUrl(cityName, userLocation.getCountryCode());
-		executor.execute(new NowWebServiceRunnable(weatherUrlLocation,forcastListener));
+		executor.execute(new NowWebServiceRunnable(weatherUrlLocation,nowForcastListener));
 	}
 	
 	public void get10DaysForcast(){
 		weatherUrlLocation = WebServiceConstant.getTenDayWeatherUrl(userLocation.getCityNameWithNoSpace(), userLocation.getCountryCode());
-		executor.execute(new TenDayWebServiceRunnable(weatherUrlLocation, forcastListener));
+		executor.execute(new TenDayWebServiceRunnable(weatherUrlLocation, tenDayForcastListener));
 	}
 }

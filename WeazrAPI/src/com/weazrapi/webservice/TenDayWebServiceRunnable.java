@@ -1,8 +1,9 @@
 package com.weazrapi.webservice;
 
-import com.weazrapi.ForcastListener;
+import com.weazrapi.TenDayForcastListener;
 import com.weazrapi.model.TenDayForcast;
 import com.weazrapi.parser.TenDayForcastParser;
+
 import android.util.Log;
 
 public class TenDayWebServiceRunnable extends WebServiceRunnable {
@@ -11,11 +12,11 @@ public class TenDayWebServiceRunnable extends WebServiceRunnable {
 	
 	private TenDayForcast tenDayForcast;
 	private TenDayForcastParser tenDayForcastParser;
-	private ForcastListener forcastListener;
+	private TenDayForcastListener tenDayForcastListener;
 	
-	public TenDayWebServiceRunnable(String dataLocation, ForcastListener forcastListener) {
+	public TenDayWebServiceRunnable(String dataLocation, TenDayForcastListener tenDayForcastListener) {
 		super(dataLocation);
-		this.forcastListener = forcastListener;
+		this.tenDayForcastListener = tenDayForcastListener;
 		this.tenDayForcast = new TenDayForcast();
 	}
 
@@ -26,7 +27,7 @@ public class TenDayWebServiceRunnable extends WebServiceRunnable {
 			weatherRequestResponseJson = webServiceDataImporter.getRemoteData();
 			tenDayForcastParser = new TenDayForcastParser(tenDayForcast, weatherRequestResponseJson);
 			tenDayForcastParser.parse();
-			forcastListener.onForcastReceived(tenDayForcast);
+			tenDayForcastListener.onForcastReceived(tenDayForcast);
 								
 		} catch (Exception e) {
 			Log.e(TAG,"10 day forcast thread error: "+e.getLocalizedMessage());

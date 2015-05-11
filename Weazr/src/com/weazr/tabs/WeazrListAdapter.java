@@ -1,16 +1,12 @@
 package com.weazr.tabs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import com.weazr.intent.manager.IIntentHandler;
 import com.weazr.main.R;
 import com.weazr.utilities.FormatBox;
-import com.weazrapi.model.TenDayForcast;
+import com.weazr.utils.Utils;
 import com.weazrapi.model.Weather;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -61,11 +57,11 @@ public class WeazrListAdapter extends BaseAdapter {
 
         Weather weazr = weazrList.get(position);
  
-        dayTempLbl.setText(FormatBox.kelvinToFahrenheit(weazr.getTemperature().getDayTemperature())+"¼");
+        dayTempLbl.setText(FormatBox.kelvinToFahrenheit(weazr.getTemperature().getDayTemperature())+"ï¿½");
         weatherDescriptionLbl.setText(weazr.getWeatherDescription().getDescription());
         dateLbl.setText(FormatBox.getFormattedDateWithoutTime(weazr.getDate()));
        
-        int weatherIcon = fragment.getActivity().getResources().getIdentifier("x"+weazr.getWeatherDescription().getIcon(), IIntentHandler.DRAWABLE_RT, IIntentHandler.R_PACKAGE);
+        int weatherIcon = fragment.getActivity().getResources().getIdentifier("x"+weazr.getWeatherDescription().getIcon(), Utils.DRAWABLE_RT, Utils.R_PACKAGE);
         weatherIconImg.setImageResource(weatherIcon);
 
         return view;

@@ -3,36 +3,26 @@ package com.weazr.main;
 import com.weazr.main.R;
 import com.weazr.settings.SettingsActivity;
 import com.weazr.tabs.TabsPagerAdapter;
-import com.weazrapi.WeazrService;
 import com.weazrapi.model.NowForcast;
-import com.weazrapi.model.UserLocation;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener{
 
 	private static final String TAG = MainActivity.class.getSimpleName();
-	
 	
 	private ViewPager viewPager;
 	private TabsPagerAdapter tabAdapter;

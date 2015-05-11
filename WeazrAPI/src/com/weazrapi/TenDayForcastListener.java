@@ -2,6 +2,8 @@ package com.weazrapi;
 
 import com.weazrapi.model.Forcast;
 
-public interface ForcastListener {
+public interface TenDayForcastListener  {
+
 	public void onForcastReceived(Forcast forcast);
+
 }

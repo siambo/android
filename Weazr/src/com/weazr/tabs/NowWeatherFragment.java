@@ -1,17 +1,15 @@
 package com.weazr.tabs;
 
-import com.weazr.intent.manager.IIntentHandler;
-import com.weazr.intent.manager.MainBroadcastReceiver;
-import com.weazr.intent.manager.MainIntentFilter;
 import com.weazr.main.R;
 import com.weazr.utilities.FormatBox;
-import com.weazrapi.ForcastListener;
+import com.weazr.utils.Utils;
+import com.weazrapi.NowForcastListener;
 import com.weazrapi.WeazrService;
 import com.weazrapi.model.Forcast;
-import com.weazrapi.model.NowForcast;
 import com.weazrapi.model.Temperature;
 import com.weazrapi.model.UserLocation;
 import com.weazrapi.model.Weather;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.TargetApi;
@@ -27,17 +25,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class NowWeatherFragment extends Fragment implements ForcastListener {
+public class NowWeatherFragment extends Fragment implements NowForcastListener {
 
 	private static final String TAG = NowWeatherFragment.class.getSimpleName();
 	
 
 	private WeazrService weazrService;
 	
-	private NowForcast nowForcast;
 	private UserLocation userLocation;
-	
-	private NowWeatherFragment nowWeatherFragment = this;
+
 	private Context context;
 	
 	private View progressBarLayout;
@@ -67,15 +63,6 @@ public class NowWeatherFragment extends Fragment implements ForcastListener {
 		super();
 		this.weazrService = weazrService;
 	}
-	
-	public NowForcast getNowForcast() {
-		return nowForcast;
-	}
-
-	public void setNowForcast(NowForcast nowForcast) {
-		this.nowForcast = nowForcast;
-	}
-	
 	
 	public UserLocation getUserLocation() {
 		userLocation = weazrService.getUserLocation();
@@ -125,18 +112,18 @@ public class NowWeatherFragment extends Fragment implements ForcastListener {
 		imageImg = (ImageView)rootView.findViewById(R.id.imageImg);
 		progressBar = (ProgressBar)rootView.findViewById(R.id.loading_time_progress_bar);
 		
-		weazrService.setForcastListener(this);
-		weazrService.getNowForcast();
 		
-		context.registerReceiver(new MainBroadcastReceiver(nowWeatherFragment), MainIntentFilter.getMainIntentFilter());
+
 		return rootView;
 	}
-	
 	
 	@Override
 	public void onResume() {
 		super.onResume();
 		makeAllWidgetsGone();
+		
+		weazrService.setNowForcastListener(this);
+		weazrService.getNowForcast();
 	}
 
 	public void makeAllWidgetsGone(){
@@ -226,7 +213,7 @@ public class NowWeatherFragment extends Fragment implements ForcastListener {
 	}
 	
 	public void displayForcast(Forcast forcast){
-		Log.d(TAG,"handle(): handling intent");
+		Log.d(TAG,"displaying forcast");
 		
 		makeProgressBarInvisible();
 		makeWidgetsVisible();
@@ -264,10 +251,10 @@ public class NowWeatherFragment extends Fragment implements ForcastListener {
 		speedLbl.setText(tempSpeed);
 		degreeLbl.setText(tempDegree);
 		
-		int weatherIcon = context.getResources().getIdentifier("x"+tempWeatherIcon, IIntentHandler.DRAWABLE_RT, IIntentHandler.R_PACKAGE);
+		int weatherIcon = context.getResources().getIdentifier("x"+tempWeatherIcon, Utils.DRAWABLE_RT, Utils.R_PACKAGE);
 		imageImg.setImageResource(weatherIcon);
 		
-		int flagIcon = context.getResources().getIdentifier(tempFlagImgIcon, IIntentHandler.DRAWABLE_RT, IIntentHandler.R_PACKAGE);
+		int flagIcon = context.getResources().getIdentifier(tempFlagImgIcon, Utils.DRAWABLE_RT, Utils.R_PACKAGE);
 		flagImg.setImageResource(flagIcon);
 	}
 
